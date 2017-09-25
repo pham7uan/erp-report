@@ -1,5 +1,5 @@
+{% extends "app_base.html" %}
 {% load template_tag_extras %}
-{% load staticfiles %}
 {% block page_content %}
 <style>
 td { white-space: nowrap; }
@@ -7,15 +7,12 @@ th { white-space: nowrap;
      align: center;}
 
 </style>
-<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="{% static 'report_preview.js' %}"></script>
+
 
 <div class="page-content" style="min-height:257px">
     <h2 align="center">Báo cáo sản xuất</h2>
     {% for key, value in production_plan.items %}
+    </br>
     <div align="center">
         <label>{{key}}</label>
         <div style="width:1000px;overflow:auto;">
