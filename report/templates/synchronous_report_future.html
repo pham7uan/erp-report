@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ERP Report</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <form id="create-report" method="POST" action="#">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <p style="padding-top:0.5em">Sản phẩm: </p>
+        </div>
+        <div class="col-md-6">
+            <div class="dropdown">
+
+                <button  class="btn btn-nomarl dropdown-toggle " type="button" data-toggle="dropdown">Product: All
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-2">
+            <p style="padding-top:0.5em">Version RD BoM: </p>
+        </div>
+        <div class="col-md-6">
+                <button class="btn btn-nomarl dropdown-toggle" type="button" data-toggle="dropdown">Vertion: All
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">HTML</a></li>
+                    <li><a href="#">CSS</a></li>
+                    <li><a href="#">JavaScript</a></li>
+                </ul>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+            <label><input type="checkbox" value=""> Có tính vay mượn của dự án khác </label>
+        </div>
+    </div>
+
+</form>
+</div>
+
+</body>
+</html>
+

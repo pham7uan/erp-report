@@ -1,0 +1,298 @@
+{% extends "app_base.html" %}
+<!--{% load template_tag_extras %}-->
+
+
+{% block page_content %}
+  <div class="row">
+	  <div class="col-sm-5">
+		  <div id='circleChart'></div>
+	  </div>
+	  <div class="col-sm-7">
+		  <div id ='barChart'></div>
+	  </div>
+  </div>
+{% endblock%}
+
+{% block page_scripts %}
+
+<script>
+var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
+var production = {{ production | js }};
+var production_data = []
+for (i=0; i < production.length; i++){
+    p = {
+        'text':production[i]['name'],
+        'values':[production[i]['sum']],
+        'backgroundColor':colors[i]
+    }
+    production_data.push(p)
+}
+
+var production_plan_data=[]
+var production_plan = {{production_plan | js}}
+var labels =[]
+for (var pkey in production_plan){
+	name = pkey
+
+	labels.push(name)
+}
+
+var type = {
+	"ke_hoach":"Kế hoạch",
+	"hang_ve":"Hàng về",
+	"san_xuat":"Sản xuất",
+	"kinh_doanh":"Kinh doanh"};
+
+var count =0;
+for (var key in type) {
+	values = []
+    for (var pkey in production_plan){
+    	detail = production_plan[pkey]
+    	values.push(detail[key]['sum'])
+    }
+    production_plan_data.push({'values':values,'text':type[key],'background-color':colors[count]})
+    count ++
+}
+
+
+
+var circleConfig = {
+backgroundColor:'#FBFCFE',
+ 	type: "ring",
+ 	title: {
+ 	  text: "Kế hoạch sản xuất",
+ 	  fontFamily: 'Lato',
+ 	  fontSize: 16,
+ 	  // border: "1px solid black",
+ 	  padding: "15",
+ 	  fontColor : "#1E5D9E",
+ 	},
+ 	plot: {
+ 	  slice:'60%',
+ 	  borderWidth:0,
+ 	  backgroundColor:'#FBFCFE',
+ 	  animation:{
+ 	    effect:2,
+ 	    sequence:3
+ 	  },
+ 	  valueBox: [
+ 	    {
+ 	      type: 'all',
+ 	      text: '%t',
+ 	      placement: 'out'
+ 	    },
+ 	    {
+ 	      type: 'all',
+ 	      text: '%npv%',
+ 	      placement: 'in'
+ 	    }
+ 	  ]
+ 	},
+  tooltip:{
+ 	    fontSize:16,
+ 	    anchor:'c',
+ 	    x:'50%',
+ 	    y:'50%',
+ 	    sticky:true,
+ 	    backgroundColor:'none',
+ 	    borderWidth:0,
+ 	    thousandsSeparator:',',
+ 	    text:'<span style="color:%color">%t</span><br><span style="color:%color">%v</span><br><span style="color:%color">Chiếm: %npv%</span>',
+      mediaRules:[
+        {
+            maxWidth:500,
+       	    y:'54%',
+        }
+      ]
+  },
+ 	plotarea: {
+ 	  backgroundColor: 'transparent',
+ 	  borderWidth: 0,
+ 	  borderRadius: "0 0 0 10",
+ 	  margin: "70 0 10 0"
+ 	},
+ 	"legend": {
+                "layout": "2x3",
+                "y": "13%",
+                "x": "13%",
+                "overflow": "page",
+                "alpha": 0.05,
+                "shadow": false,
+                "marker": {
+                    "type": "circle",
+                    "border-color": "none",
+                    "size": "8px"
+                },
+                "border-width": 0,
+                "maxItems": 5,
+                "toggle-action": "remove",
+                "pageOn": {
+                    "backgroundColor": "#000",
+                    "size": "8px",
+                    "alpha": 0.65
+                },
+                "pageOff": {
+                    "backgroundColor": "#7E7E7E",
+                    "size": "10px",
+                    "alpha": 0.65
+                },
+                "pageStatus": {
+                    "color": "black"
+                }
+            },
+ 	scaleR:{
+ 	  refAngle:270
+ 	},
+	series : production_data
+};
+
+zingchart.render({
+	id : 'circleChart',
+  data: {
+    gui:{
+      contextMenu:{
+        button:{
+          visible: true,
+          lineColor: "#2D66A4",
+          backgroundColor: "#2D66A4"
+        },
+        gear: {
+          alpha: 1,
+          backgroundColor: "#2D66A4"
+        },
+        position: "right",
+        backgroundColor:"#306EAA", /*sets background for entire contextMenu*/
+        docked: true,
+        item:{
+          backgroundColor:"#306EAA",
+          borderColor:"#306EAA",
+          borderWidth: 0,
+          fontFamily: "Lato",
+          color:"#fff"
+        }
+
+      },
+    },
+    graphset: [circleConfig]
+  },
+	height: '499',
+	width: '99%'
+});
+
+
+zingchart.THEME="classic";
+var barConfig = {
+    "graphset": [
+        {
+            "type": "bar",
+            "background-color": "white",
+            "title": {
+                "text": "Kế hoạch và thực tế",
+                "font-color": "#7E7E7E",
+                "backgroundColor": "none",
+                "font-size": "22px",
+                "alpha": 1,
+                "y": "15px",
+                "x": "15px"
+            },
+            "tooltip": {
+                "text": "%v"
+            },
+            "value-box": {
+      			"text": "%v"
+    		},
+            "plotarea": {
+                "margin": "80 60 100 60",
+                "y": "125px"
+            },
+            "legend": {
+                "layout": "x4",
+                "y": "13%",
+                "x": "24.5%",
+                "overflow": "page",
+                "alpha": 0.05,
+                "shadow": false,
+                "marker": {
+                    "type": "circle",
+                    "border-color": "none",
+                    "size": "8px"
+                },
+                "border-width": 0,
+                "maxItems": 4,
+                "toggle-action": "remove",
+                "pageOn": {
+                    "backgroundColor": "#000",
+                    "size": "8px",
+                    "alpha": 0.65
+                },
+                "pageOff": {
+                    "backgroundColor": "#7E7E7E",
+                    "size": "10px",
+                    "alpha": 0.65
+                },
+                "pageStatus": {
+                    "color": "black"
+                }
+            },
+            "plot": {
+                "animation": {
+                    "effect": "ANIMATION_SLIDE_BOTTOM"
+                }
+            },
+            "scale-x": {
+                "line-color": "#7E7E7E",
+                "labels":labels,
+                "item": {
+                    "font-color": "#7e7e7e"
+                },
+                "guide": {
+                    "visible": false
+                }
+            },
+            "scale-y": {
+                "line-color": "#7E7E7E",
+                "item": {
+                    "font-color": "#7e7e7e"
+                },
+
+                "guide": {
+                    "visible": true
+                },
+                "label": {
+                  "text": "",
+                  "font-family": "arial",
+                  "font-angle":0,
+                  "bold": true,
+                  "font-size": "14px",
+                  "font-color": "#7E7E7E",
+                  "offset-y":"-190px",
+                  "offset-x":"20px"
+            },
+            },
+            "series": production_plan_data
+        }
+    ]
+};
+
+zingchart.render({
+	id : 'barChart',
+	data : barConfig,
+	height: 500,
+	width: 725
+});
+
+zingchart.node_click = function(data){
+            nodeid = data["nodeindex"]
+            plotid = data["plotindex"]
+            if (nodeid == 0){
+            	productname = production[plotid]['name']
+            	console.log(productname)
+            	window.location = "http://localhost:8000/erp/detail/" + productname;
+            } else if (nodeid > 0){
+            	var keys = Object.keys( production_plan );
+            	productname = keys[nodeid]
+            	window.location = "http://localhost:8000/erp/detail/" + productname;
+            }
+       }
+</script>
+{% endblock%}

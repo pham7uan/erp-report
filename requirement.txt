@@ -1,0 +1,15 @@
+certifi==2017.7.27.1
+chardet==3.0.4
+Django==1.11.5
+djangorestframework==3.6.4
+idna==2.6
+mpmath==0.19
+numpy==1.13.1
+PuLP==1.6.8
+pyparsing==2.2.0
+pytz==2017.2
+requests==2.18.4
+scipy==0.19.1
+setupfiles==0.0.50
+sympy==1.1.1
+urllib3==1.22

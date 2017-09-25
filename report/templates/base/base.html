@@ -1,0 +1,27 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    {% include "base_head.html" %}
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed page-quick-sidebar-over-content page-full-width">
+{% block main %}
+{% endblock %}
+
+{% include "base_scripts.html" %}
+
+{% block page_scripts %}
+
+{% endblock %}
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

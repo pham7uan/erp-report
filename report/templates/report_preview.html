@@ -1,0 +1,103 @@
+{% load template_tag_extras %}
+{% load staticfiles %}
+{% block page_content %}
+<style>
+td { white-space: nowrap; }
+th { white-space: nowrap;
+     align: center;}
+
+</style>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'report_preview.js' %}"></script>
+
+<div class="page-content" style="min-height:257px">
+    <h2 align="center">Báo cáo sản xuất</h2>
+    {% for key, value in production_plan.items %}
+    <div align="center">
+        <label>{{key}}</label>
+        <div style="width:1000px;overflow:auto;">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr bgcolor="#D3D3D3">
+                    <th>TT</th>
+                    <th>Thông tin</th>
+                    <th>Tổng</th>
+                    <th>Tồn đầu kỳ</th>
+                    <th>T1</th>
+                    <th>T2</th>
+                    <th>T3</th>
+                    <th>T4</th>
+                    <th>T5</th>
+                    <th>T6</th>
+                    <th>T7</th>
+                    <th>T8</th>
+                    <th>T9</th>
+                    <th>T10</th>
+                    <th>T11</th>
+                    <th>T12</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Kế hoạch</td>
+                    <td>{{value.ke_hoach.sum}}</td>
+                    <td style="width:80px">{{value.ke_hoach.ton_kho}}</td>
+                    {% for v in value.ke_hoach.months%}
+                    <td>{{v}}</td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Hàng về</td>
+                    <td>{{value.hang_ve.sum}}</td>
+                    <td>{{value.hang_ve.ton_kho}}</td>
+                    {% for v in value.hang_ve.months%}
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('hang_ve',{{ forloop.counter }})">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Sản xuất</td>
+                    <td>{{value.san_xuat.sum}}</td>
+                    <td>{{value.san_xuat.ton_kho}}</td>
+                    {% for v in value.san_xuat.months%}
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('san_xuat',{{ forloop.counter }})">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Kinh doanh</td>
+                    <td>{{value.kinh_doanh.sum}}</td>
+                    <td>{{value.kinh_doanh.ton_kho}}</td>
+                    {% for v in value.kinh_doanh.months%}
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('kinh_doanh',{{ forloop.counter }})">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor%}
+
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="modalheader">Modal Header</h4>
+        </div>
+        <div class="modal-body" id="modalbody">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock%}

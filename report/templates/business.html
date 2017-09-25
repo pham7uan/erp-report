@@ -1,0 +1,107 @@
+{% extends "app_base.html" %}
+{% load template_tag_extras %}
+{% block page_content %}
+
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div id ='businessChart' align="center"></div>
+			</div>
+
+		</div>
+
+{% endblock%}
+{% block page_scripts %}
+<script>
+var chartname = "Kế hoạch kinh doanh " + "{{product}}"
+	var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
+
+	var type = {
+	"ke_hoach":"Kế hoạch",
+	"hang_ve":"Hàng về",
+	"san_xuat":"Sản xuất",
+	"kinh_doanh":"Kinh doanh"};
+
+	var business_series=[]
+	var business_data = {{business | js}}
+    var line = {{line | js}}
+	var count =0;
+    for (var key in  type){
+    	name = 	type[key]
+    	values = business_data[key]['months']
+    	business_series.push(
+    		{'values':values,
+    		'text':name,
+    		'type':'bar',
+    		'backgroundColor':colors[count]
+    		})
+    	business_series.push(
+    	{
+    	    "type":"line",
+            "values":line[key],
+            "text":"Linear (" + type[key] +")",
+    	}
+    	)
+    count ++
+    }
+	console.log(business_series)
+	var businessConfig = {
+  "type":"mixed",
+  "title":{
+    "text":chartname
+  },
+  legend : {
+    "layout": "2x4",
+    toggleAction:'remove',
+    backgroundColor:'#FBFCFE',
+    borderWidth:0,
+    adjustLayout:true,
+    align:'center',
+    verticalAlign:'bottom',
+    marker: {
+        type:'circle',
+        cursor:'pointer',
+        borderWidth:0,
+        size:6
+    },
+    item: {
+        fontColor: "#777",
+        cursor:'pointer',
+        offsetX:-6,
+        fontSize:12
+    },
+    mediaRules:[
+        {
+            maxWidth:500,
+            visible:false
+        }
+    ]
+ 	},
+  "plot":{
+  	"marker":{
+      "size":1
+
+    },
+    "tooltip":{
+      "text":"%t: %v",
+      "thousands-separator":","
+    }
+  },
+  "scale-x":{
+    "labels":['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7',
+ 	  			'Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12']
+  },
+  "scale-y":{
+    "min-value":"0",
+},
+  "series":business_series
+};
+
+zingchart.render({
+	id : 'businessChart',
+	data : businessConfig,
+	height: "100%",
+	width: "100%"
+});
+</script>
+{% endblock%}

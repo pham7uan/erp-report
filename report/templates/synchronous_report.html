@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+{% load template_tag_extras %}
+<head>
+  <title>ERP Report</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static 'report.js' %}"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static '/treegrid/css/jquery.treegrid.css' %}">
+  <script type="text/javascript" src="{% static '/treegrid/js/jquery.treegrid.js' %}"></script>
+  <script type="text/javascript" src="{% static '/treegrid/js/jquery.treegrid.bootstrap3.js' %}"></script>
+
+
+
+  <script type="text/javascript">
+   $(document).ready(function() {
+        $('.tree').treegrid();
+    });
+  </script>
+  <script>
+      var result = {{ result | js }};
+      var treeview = "{% static 'img/treeview.png' %}";
+      var tableview = "{% static 'img/tableview.png' %}";
+      console.log(tableview);
+  </script>
+</head>
+<body>
+
+<div class="container">
+    <button class="btn btn-default" id="btnTree" onclick="btnTree()">
+        <img src="{% static 'img/treeview.png' %}" height="25" width="25"/>
+    </button>
+    <button class="btn btn-default" id="btnTable" onclick="btnTable()">
+        <img src="{% static 'img/tableview.png' %}" height="25" width="25"/>
+    </button>
+    <div id="treeviewtag"></div>
+    <div id="tableviewtag">
+        {%  for p_name, p_value in result.items  %}
+            <div class="row">
+                <h2>{{p_name}}</h2>
+                <label>Số sản phẩm có thể sản xuất: {{p_value.max}}</label>
+                <p>Chi tiết: </p>
+            </div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên linh kiện</th>
+                            <th>Số lượng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%  for m in p_value.materials_list  %}
+                            <tr>
+
+                                {% with m.0|split:"_" as skills %}
+                                    {% for s in skills reversed%}
+                                        <td>{{s}}</td>
+                                    {% endfor %}
+                                {% endwith %}
+
+                                <td>{{m.1}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+    <form action = "{%  url 'report:current'  %}" method="get">
+        {%  csrf_token  %}
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-default">Quay lại</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

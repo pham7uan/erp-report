@@ -1,0 +1,245 @@
+{% extends "app_base.html" %}
+{% load template_tag_extras %}
+{% block page_content %}
+
+		<div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div id ='areaChart' align="center"></div>
+			</div>
+
+		</div>
+        <div class="row">
+			<div class="col-sm-1"></div>
+			<div class="col-sm-10">
+				<div id ='businessChart' align="center"></div>
+			</div>
+
+		</div>
+
+{% endblock%}
+{% block page_scripts %}
+<script>
+	var areaname = "Kế hoạch sản xuất kinh doanh " + "{{product}}" + " (theo miền)"
+	var barname = "Kế hoạch kinh doanh " + "{{product}}" + " (theo cột)"
+	var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
+
+	var type = {
+	"ke_hoach":"Kế hoạch",
+	"hang_ve":"Hàng về",
+	"san_xuat":"Sản xuất",
+	"kinh_doanh":"Kinh doanh"};
+
+	var area_series=[]
+	var bar_series=[]
+	var line = {{line | js}}
+	var production_plan = {{production_plan | js}}
+
+	var count =0;
+    for (var key in  type){
+    	name = 	type[key]
+    	values = production_plan[key]['months']
+    	area_series.push(
+    		{'values':values,
+    		'text':name,
+    		'backgroundColor1':colors[count],
+    		'backgroundColor2':colors[count],
+    		"line-color":colors[count],
+    		})
+    	bar_series.push(
+    		{'values':values,
+    		'text':name,
+    		'type':'bar',
+    		'backgroundColor':colors[count]
+    		})
+    	bar_series.push(
+    	{
+    	    "type":"line",
+            "values":line[key],
+            "text":"Linear (" + type[key] +")",
+    	}
+    	)
+    	count ++
+    }
+	<!--console.log(assign_series)-->
+    var areaConfig = {
+  backgroundColor : "#fff",
+  globals : {
+    shadow : false,
+    fontFamily : "Helvetica"
+  },
+ 	type: "area",
+ 	title :{
+ 	  text : areaname,
+ 	  fontColor : "#5f5f5f",
+ 	  backgroundColor : "transparent",
+ 	  textAlign : "left",
+ 	  padding: "15px 15px",
+ 	  fontSize : "20px"
+ 	},
+ 	legend : {
+    "layout": "x4",
+    toggleAction:'remove',
+    backgroundColor:'#FBFCFE',
+    borderWidth:0,
+    adjustLayout:true,
+    align:'center',
+    verticalAlign:'bottom',
+    marker: {
+        type:'circle',
+        cursor:'pointer',
+        borderWidth:0,
+        size:6
+    },
+    item: {
+        fontColor: "#777",
+        cursor:'pointer',
+        offsetX:-6,
+        fontSize:12
+    },
+    mediaRules:[
+        {
+            maxWidth:500,
+            visible:false
+        }
+    ]
+ 	},
+ 	scaleX : {
+ 	  maxItems : 12,
+ 	  transform : {
+ 	    type : 'date'
+ 	  },
+ 	  zooming : true,
+ 	  values : ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7',
+ 	  			'Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'],
+ 	  lineColor : "#5f5f5f",
+ 	  lineWidth : "1px",
+ 	  tick : {
+ 	    lineColor : "#5f5f5f",
+ 	    lineWidth : "1px"
+ 	  },
+ 	  item : {
+ 	    fontColor : "#5f5f5f"
+ 	  },
+ 	  guide : {
+ 	    visible : false
+ 	  }
+ 	},
+ 	scaleY : {
+ 	  lineColor : "#5f5f5f",
+ 	  lineWidth : "1px",
+ 	  tick : {
+ 	    lineColor : "#5f5f5f",
+ 	    lineWidth : "1px"
+ 	  },
+ 	  guide : {
+ 	    lineStyle : "solid",
+ 	    lineColor : "#626262"
+ 	  },
+ 	   item : {
+ 	    fontColor : "#5f5f5f"
+ 	  },
+ 	},
+ 	tooltip : {
+ 	  visible : false
+ 	},
+ 	crosshairX :{
+ 	  scaleLabel : {
+ 	    backgroundColor : "#fff",
+ 	    fontColor : "black",
+ 	    borderColor:"#333",
+ 	    borderWidth: 1,
+ 	    borderRadius: 3
+ 	  },
+ 	  plotLabel :{
+ 	    backgroundColor : "#434343",
+ 	    fontColor : "#FFF"
+ 	  }
+ 	},
+ 	plot : {
+ 	  "contour-on-top":false,
+ 	  alphaArea : 1,
+ 	  lineWidth : "2px",
+ 	  aspect : "spline",
+ 	  marker : {
+ 	    visible : false
+ 	  },
+ 	  animation:{
+      delay: 500,
+      effect: "ANIMATION_SLIDE_TOP",
+      speed: 700,
+      method: 0,
+      sequence: 1
+ 	  }
+ 	},
+	series : area_series
+};
+
+zingchart.render({
+	id : 'areaChart',
+	data : areaConfig,
+	height: '100%',
+	width: '100%' ,
+});
+
+var businessConfig = {
+  "type":"mixed",
+  "title":{
+    "text":barname,
+    textAlign : "left",
+  },
+  legend : {
+    "layout": "2x4",
+    toggleAction:'remove',
+    backgroundColor:'#FBFCFE',
+    borderWidth:0,
+    adjustLayout:true,
+    align:'center',
+    verticalAlign:'bottom',
+    marker: {
+        type:'circle',
+        cursor:'pointer',
+        borderWidth:0,
+        size:6
+    },
+    item: {
+        fontColor: "#777",
+        cursor:'pointer',
+        offsetX:-6,
+        fontSize:12
+    },
+    mediaRules:[
+        {
+            maxWidth:500,
+            visible:false
+        }
+    ]
+ 	},
+  "plot":{
+  	"marker":{
+      "size":1
+
+    },
+    "tooltip":{
+      "text":"%t: %v",
+      "thousands-separator":","
+    }
+  },
+  "scale-x":{
+    "labels":['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7',
+ 	  			'Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12']
+  },
+  "scale-y":{
+    "min-value":"0",
+},
+  "series":bar_series
+};
+
+zingchart.render({
+	id : 'businessChart',
+	data : businessConfig,
+	height: "100%",
+	width: "100%"
+});
+</script>
+{% endblock%}
