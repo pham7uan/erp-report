@@ -10,11 +10,11 @@ th { white-space: nowrap;
 
 
 <div class="page-content" style="min-height:257px">
-    <h2 align="center">Báo cáo sản xuất</h2>
+    <h1 align="center">Báo cáo sản xuất</h1>
     {% for key, value in production_plan.items %}
     </br>
     <div align="center">
-        <label>{{key}}</label>
+        <label style="font-weight: 900;">{{key}}</label>
         <div style="width:1000px;overflow:auto;">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -53,7 +53,7 @@ th { white-space: nowrap;
                     <td>{{value.hang_ve.sum}}</td>
                     <td>{{value.hang_ve.ton_kho}}</td>
                     {% for v in value.hang_ve.months%}
-                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('hang_ve',{{ forloop.counter }})">{{v}}</a></td>
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
                     {% endfor%}
                 </tr>
                 <tr>
@@ -62,7 +62,7 @@ th { white-space: nowrap;
                     <td>{{value.san_xuat.sum}}</td>
                     <td>{{value.san_xuat.ton_kho}}</td>
                     {% for v in value.san_xuat.months%}
-                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('san_xuat',{{ forloop.counter }})">{{v}}</a></td>
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('san_xuat',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
                     {% endfor%}
                 </tr>
                 <tr>
@@ -71,7 +71,7 @@ th { white-space: nowrap;
                     <td>{{value.kinh_doanh.sum}}</td>
                     <td>{{value.kinh_doanh.ton_kho}}</td>
                     {% for v in value.kinh_doanh.months%}
-                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('kinh_doanh',{{ forloop.counter }})">{{v}}</a></td>
+                    <td><a  href="#" data-toggle="modal" data-target="#myModal" onclick="handleModal('kinh_doanh',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
                     {% endfor%}
                 </tr>
                 </tbody>
@@ -79,6 +79,7 @@ th { white-space: nowrap;
         </div>
     </div>
     {% endfor%}
+
 
 </div>
   <!-- Modal -->

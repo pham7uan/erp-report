@@ -182,6 +182,30 @@ production_plan_test = {
 			},
 }
 
+hang_ve_test = {
+	'ONTv1':[{
+		'plan':15,
+		'order':13,
+		'order_date':'1/1/2017',
+		'receive':12.5,
+		'receive_date':'2/1/2017'
+	},{
+		'plan':15,
+		'order':13,
+		'order_date':'1/1/2017',
+		'receive':0.5,
+		'receive_date':'3/1/2017'
+	}],
+	'ONTv2':[{
+		'plan':15,
+		'order':15,
+		'order_date':'1/1/2017',
+		'receive':12.5,
+		'receive_date':'2/1/2017'
+	}]
+}
+
+
 def check_minimum():
     data = data2.data
     bom = data['bom']

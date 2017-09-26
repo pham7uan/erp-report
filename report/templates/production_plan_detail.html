@@ -1,29 +1,118 @@
 {% extends "app_base.html" %}
 {% load template_tag_extras %}
 {% block page_content %}
+<style>
+td { white-space: nowrap; }
+th { white-space: nowrap;
+     align: center;}
 
-		<div class="row">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-10">
-				<div id ='areaChart' align="center"></div>
-			</div>
 
-		</div>
-        <div class="row">
-			<div class="col-sm-1"></div>
-			<div class="col-sm-10">
-				<div id ='businessChart' align="center"></div>
-			</div>
+</style>
+<div style="padding-top:50px">
 
-		</div>
+
+<h1 align="center">Kế hoạch sản xuất kinh doanh {{product}}</h1>
+<div class="row" align="center">
+
+        <div id='areaChart' style="width:1100px;height:400px; "></div>
+        </br>
+        <div id='businessChart'style="width:1100px;height:400px;"></div>
+        </br>
+        <div style="width:1100px;overflow:auto; background-color: white;">
+            <h4 align="left" style="padding-left:5px;"><b> Báo cáo sản xuất kinh doanh theo tháng</b></h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr bgcolor="#D3D3D3">
+                    <th>TT</th>
+                    <th>Thông tin</th>
+                    <th>Tổng</th>
+                    <th>Tồn đầu kỳ</th>
+                    <th>T1</th>
+                    <th>T2</th>
+                    <th>T3</th>
+                    <th>T4</th>
+                    <th>T5</th>
+                    <th>T6</th>
+                    <th>T7</th>
+                    <th>T8</th>
+                    <th>T9</th>
+                    <th>T10</th>
+                    <th>T11</th>
+                    <th>T12</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Kế hoạch</td>
+                    <td>{{production_plan.ke_hoach.sum}}</td>
+                    <td style="width:80px">{{production_plan.ke_hoach.ton_kho}}</td>
+                    {% for v in production_plan.ke_hoach.months%}
+                    <td>{{v}}</td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Hàng về</td>
+                    <td>{{production_plan.hang_ve.sum}}</td>
+                    <td>{{production_plan.hang_ve.ton_kho}}</td>
+                    {% for v in production_plan.hang_ve.months%}
+                    <td><a href="#" data-toggle="modal" data-target="#myModal"
+                           onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Sản xuất</td>
+                    <td>{{production_plan.san_xuat.sum}}</td>
+                    <td>{{production_plan.san_xuat.ton_kho}}</td>
+                    {% for v in production_plan.san_xuat.months%}
+                    <td><a href="#" data-toggle="modal" data-target="#myModal"
+                           onclick="handleModal('san_xuat',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Kinh doanh</td>
+                    <td>{{production_plan.kinh_doanh.sum}}</td>
+                    <td>{{production_plan.kinh_doanh.ton_kho}}</td>
+                    {% for v in production_plan.kinh_doanh.months%}
+                    <td><a href="#" data-toggle="modal" data-target="#myModal"
+                           onclick="handleModal('kinh_doanh',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                    {% endfor%}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modalheader">Modal Header</h4>
+            </div>
+            <div class="modal-body" id="modalbody">
+            </div>
+        </div>
+
+    </div>
+</div>
+
 
 {% endblock%}
 {% block page_scripts %}
 
 <script>
 
-	var areaname = "Kế hoạch sản xuất kinh doanh " + "{{product}}" + " (theo miền)"
-	var barname = "Kế hoạch kinh doanh " + "{{product}}" + " (theo cột)"
+	var areaname = "Phân bổ kế hoạch theo tháng - biểu đồ miền"
+	var barname = "Phân bổ kế hoạch theo tháng - biểu đồ cột"
 	var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
 
 	var type = {
@@ -65,7 +154,7 @@
     }
 	<!--console.log(assign_series)-->
     var areaConfig = {
-  backgroundColor : "#fff",
+  "background-color": "#FFFFFF",
   globals : {
     shadow : false,
     fontFamily : "Helvetica"
@@ -77,7 +166,7 @@
  	  backgroundColor : "transparent",
  	  textAlign : "left",
  	  padding: "15px 15px",
- 	  fontSize : "20px"
+ 	  fontSize : "18px"
  	},
  	legend : {
     "layout": "x4",
@@ -162,7 +251,7 @@
  	  "contour-on-top":false,
  	  alphaArea : 1,
  	  lineWidth : "2px",
- 	  aspect : "spline",
+
  	  marker : {
  	    visible : false
  	  },
@@ -185,10 +274,12 @@ zingchart.render({
 });
 
 var businessConfig = {
+	"background-color": "#FFFFFF",
   "type":"mixed",
   "title":{
     "text":barname,
     textAlign : "left",
+    fontSize : "18px"
   },
   legend : {
     "layout": "2x4",
@@ -243,5 +334,6 @@ zingchart.render({
 	height: "100%",
 	width: "100%"
 });
+
 </script>
 {% endblock%}

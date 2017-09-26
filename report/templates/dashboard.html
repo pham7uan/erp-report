@@ -3,6 +3,7 @@
 
 
 {% block page_content %}
+<div  style="padding-top:50px">
   <div class="row">
 	  <div class="col-sm-5">
 		  <div id='circleChart'></div>
@@ -11,6 +12,7 @@
 		  <div id ='barChart'></div>
 	  </div>
   </div>
+</div>
 {% endblock%}
 
 {% block page_scripts %}
@@ -57,12 +59,12 @@ for (var key in type) {
 
 
 var circleConfig = {
-backgroundColor:'#FBFCFE',
+backgroundColor:'#FFFFFF',
  	type: "ring",
  	title: {
  	  text: "Kế hoạch sản xuất",
- 	  fontFamily: 'Lato',
- 	  fontSize: 16,
+ 	  "font-color": "#7E7E7E",
+ 	  fontSize: 22,
  	  // border: "1px solid black",
  	  padding: "15",
  	  fontColor : "#1E5D9E",
@@ -185,7 +187,7 @@ var barConfig = {
     "graphset": [
         {
             "type": "bar",
-            "background-color": "white",
+            "background-color": "#FFFFFF",
             "title": {
                 "text": "Kế hoạch và thực tế",
                 "font-color": "#7E7E7E",

@@ -108,8 +108,9 @@ def save_report(request):
 
 @xframe_options_exempt
 def report_preview(request):
+    receive = hang_ve_test
     production_plan = production_plan_test
-    return render(request,'report_preview.html',{'production_plan':production_plan})
+    return render(request,'report_preview.html',{'production_plan':production_plan,'receive':receive})
 
 @csrf_exempt
 def mrp_calculator(request):

@@ -1,9 +1,9 @@
 {% load staticfiles %}
 {% load template_tag_extras %}
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script src="{% static 'report_preview.js' %}"></script>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
@@ -56,28 +56,28 @@ jQuery(document).ready(function() {
     Metronic.init(); // init metronic core components
     Layout.init(); // init current layout
 });
+
 </script>
+<div class="page-header navbar navbar-fixed-top">
+	<div class="page-header-inner">
+		<div class="page-logo">
+			<a href="{% url 'report:dashboard' %}">
+			<img src="{% static 'img/logo_vnpt_big.png' %}" alt="logo" class="logo-default">
+			</a>
 
-
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">VNPT</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="{% url 'report:dashboard' %}" style="font-weight: bold">Dashboard</a></li>
-      <li><a href="{% url 'report:detail' 'ONT' %}" style="font-weight: bold">ONT</a></li>
-      <li><a href="{% url 'report:detail' 'SMB & STB' %}" style="font-weight: bold">SMB & STB</a></li>
-      <li><a href="{% url 'report:detail' 'Smartphone' %}" style="font-weight: bold">Smartphone</a></li>
-      <li><a href="{% url 'report:detail' 'DVB' %}" style="font-weight: bold">DVB</a></li>
-      <li><a href="{% url 'report:detail' 'Sp khac' %}" style="font-weight: bold">Sp khác</a></li>
-      <li><a href="{% url 'report:report-preview' %}" style="font-weight: bold">Báo cáo sản xuất</a></li>
-
-    </ul>
-  </div>
-</nav>
-<!--style="min-height:257px"-->
-<!--<div style="padding-left: 2cm;padding-right: 2cm;">-->
+		</div>
+		<div class="hor-menu hor-menu-light hidden-sm hidden-xs">
+			<ul class="nav navbar-nav">
+				<li><a href="{% url 'report:dashboard' %}" >Dashboard </a></li>
+                <li><a href="{% url 'report:detail' 'ONT' %}" >ONT</a></li>
+                <li><a href="{% url 'report:detail' 'SMB & STB' %}">SMB & STB</a></li>
+                <li><a href="{% url 'report:detail' 'Smartphone' %}" >Smartphone</a></li>
+                <li><a href="{% url 'report:detail' 'DVB' %}" >DVB</a></li>
+                <li><a href="{% url 'report:detail' 'Sp khac' %}" >Sp khác</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
 <div class="container">
   {% block page_content %}
   {% endblock%}
