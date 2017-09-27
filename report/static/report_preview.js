@@ -1,3 +1,4 @@
+//hang ve
 var receive_test = {
 	'ONTv1':[{
 		'plan':15,
@@ -20,7 +21,7 @@ var receive_test = {
 		'receive_date':'2/1/2017'
 	}]
 }
-
+// san xuat
 var produce_test = {
     'ONTv1': {
         'plan_quantity':13,
@@ -35,7 +36,7 @@ var produce_test = {
         'store_date':'10/1/2017'
     }
 }
-
+//kinh doanh
 var business_test = {
     'ONTv1': {
         'plan_quantity':13,
@@ -121,4 +122,23 @@ function handleModal(type,month,key){
     $('#modalheader').html(title);
     $('#modalbody').append(table);
 
+}
+//Math.floor(Math.random() * 6) + 1
+function loading(){
+    random =0
+    random = getRandomInt(20,50)
+    str = random +'%'
+    $('#processing').css('width', str);
+    $('#processing').html(str);
+    setTimeout(function(){
+        random = getRandomInt(60,90)
+        str = random +'%'
+        $('#processing').css('width', str);
+        $('#processing').html(str);
+    }, 2000);
+
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

@@ -18,6 +18,7 @@
 {% block page_scripts %}
 
 <script>
+year = '{{year}}'
 var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
 var production = {{ production | js }};
 var production_data = []
@@ -56,7 +57,30 @@ for (var key in type) {
     count ++
 }
 
+var action = {
+      contextMenu:{
+        button:{
+          visible: true,
+          lineColor: "#2D66A4",
+          backgroundColor: "#2D66A4"
+        },
+        gear: {
+          alpha: 1,
+          backgroundColor: "#2D66A4"
+        },
+        position: "right",
+        backgroundColor:"#306EAA", /*sets background for entire contextMenu*/
+        docked: true,
+        item:{
+          backgroundColor:"#306EAA",
+          borderColor:"#306EAA",
+          borderWidth: 0,
+          fontFamily: "Lato",
+          color:"#fff"
+        }
 
+      },
+    }
 
 var circleConfig = {
 backgroundColor:'#FFFFFF',
@@ -99,7 +123,7 @@ backgroundColor:'#FFFFFF',
  	    backgroundColor:'none',
  	    borderWidth:0,
  	    thousandsSeparator:',',
- 	    text:'<span style="color:%color">%t</span><br><span style="color:%color">%v</span><br><span style="color:%color">Chiếm: %npv%</span>',
+ 	    text:'<span style="color:%color">%t</span><br><span style="color:%color">%v</span><br><span style="color:%color">%npv%</span>',
       mediaRules:[
         {
             maxWidth:500,
@@ -151,30 +175,7 @@ backgroundColor:'#FFFFFF',
 zingchart.render({
 	id : 'circleChart',
   data: {
-    gui:{
-      contextMenu:{
-        button:{
-          visible: true,
-          lineColor: "#2D66A4",
-          backgroundColor: "#2D66A4"
-        },
-        gear: {
-          alpha: 1,
-          backgroundColor: "#2D66A4"
-        },
-        position: "right",
-        backgroundColor:"#306EAA", /*sets background for entire contextMenu*/
-        docked: true,
-        item:{
-          backgroundColor:"#306EAA",
-          borderColor:"#306EAA",
-          borderWidth: 0,
-          fontFamily: "Lato",
-          color:"#fff"
-        }
-
-      },
-    },
+    gui:action,
     graphset: [circleConfig]
   },
 	height: '499',
@@ -184,6 +185,23 @@ zingchart.render({
 
 zingchart.THEME="classic";
 var barConfig = {
+	gui: {
+    contextMenu: {
+      customItems: [
+        {
+          text: 'Show Alert',
+          function: 'zingAlert()',
+          id: 'showAlert'
+        }
+      ]
+    },
+    behaviors: [
+      {
+        id: 'showAlert',
+        enabled: 'all'
+      }
+    ]
+  },
     "graphset": [
         {
             "type": "bar",
@@ -278,19 +296,21 @@ var barConfig = {
 
 zingchart.render({
 	id : 'barChart',
+
+  	gui:action,
 	data : barConfig,
 	height: 500,
 	width: 725
 });
 
 zingchart.node_click = function(data){
+			id = data["id"]
             nodeid = data["nodeindex"]
             plotid = data["plotindex"]
-            if (nodeid == 0){
+            if (id == 'circleChart'){
             	productname = production[plotid]['name']
-            	console.log(productname)
             	window.location = "http://localhost:8000/erp/detail/" + productname;
-            } else if (nodeid > 0){
+            } else if (id == 'barChart'){
             	var keys = Object.keys( production_plan );
             	productname = keys[nodeid]
             	window.location = "http://localhost:8000/erp/detail/" + productname;

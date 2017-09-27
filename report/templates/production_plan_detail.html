@@ -110,7 +110,7 @@ th { white-space: nowrap;
 {% block page_scripts %}
 
 <script>
-
+    year = '{{year}}'
 	var areaname = "Phân bổ kế hoạch theo tháng - biểu đồ miền"
 	var barname = "Phân bổ kế hoạch theo tháng - biểu đồ cột"
 	var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
@@ -154,6 +154,23 @@ th { white-space: nowrap;
     }
 	<!--console.log(assign_series)-->
     var areaConfig = {
+    gui: {
+    contextMenu: {
+      customItems: [
+        {
+          text: 'Show Alert',
+          function: 'zingAlert()',
+          id: 'showAlert'
+        }
+      ]
+    },
+    behaviors: [
+      {
+        id: 'showAlert',
+        enabled: 'all'
+      }
+    ]
+  },
   "background-color": "#FFFFFF",
   globals : {
     shadow : false,
@@ -274,6 +291,23 @@ zingchart.render({
 });
 
 var businessConfig = {
+gui: {
+    contextMenu: {
+      customItems: [
+        {
+          text: 'Show Alert',
+          function: 'zingAlert()',
+          id: 'showAlert'
+        }
+      ]
+    },
+    behaviors: [
+      {
+        id: 'showAlert',
+        enabled: 'all'
+      }
+    ]
+  },
 	"background-color": "#FFFFFF",
   "type":"mixed",
   "title":{

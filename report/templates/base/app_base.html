@@ -6,23 +6,24 @@
 
 <script src="{% static 'report_preview.js' %}"></script>
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-<link href="{% static 'global/plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" />
-<link href="{% static 'global/plugins/simple-line-icons/simple-line-icons.min.css' %}" rel="stylesheet" />
-<link href="{% static 'global/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet"
+      type="text/css"/>
+<link href="{% static 'global/plugins/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'global/plugins/simple-line-icons/simple-line-icons.min.css' %}" rel="stylesheet"/>
+<link href="{% static 'global/plugins/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet"/>
 <link href="{% static 'global/plugins/bootstrap-toastr/toastr.min.css' %}" rel="stylesheet">
-<link href="{% static 'global/plugins/uniform/css/uniform.default.css' %}" rel="stylesheet" />
+<link href="{% static 'global/plugins/uniform/css/uniform.default.css' %}" rel="stylesheet"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
 <!-- END PAGE LEVEL SCRIPTS -->
 <!-- BEGIN THEME STYLES -->
-<link href="{% static 'global/css/components.css' %}" id="style_components" rel="stylesheet" />
-<link href="{% static 'global/css/plugins.css' %}" rel="stylesheet" />
-<link href="{% static 'admin/layout/css/layout.css' %}" rel="stylesheet" />
-<link href="{% static 'admin/pages/css/login.css' %}" rel="stylesheet" />
+<link href="{% static 'global/css/components.css' %}" id="style_components" rel="stylesheet"/>
+<link href="{% static 'global/css/plugins.css' %}" rel="stylesheet"/>
+<link href="{% static 'admin/layout/css/layout.css' %}" rel="stylesheet"/>
+<link href="{% static 'admin/pages/css/login.css' %}" rel="stylesheet"/>
 <!--<link href="{% static 'admin/layout/css/themes/darkblue.css' %}" rel="stylesheet" id="style_color"/>-->
 <link href="{% static 'admin/layout/css/themes/blue.css' %}" rel="stylesheet" id="style_color"/>
-<link href="{% static 'admin/layout/css/custom.css' %}" rel="stylesheet" />
+<link href="{% static 'admin/layout/css/custom.css' %}" rel="stylesheet"/>
 <!--<link href="{% static 'global/css/bootstrap-duallistbox.min.css' %}" rel="stylesheet" />-->
 <!-- END THEME STYLES -->
 <link rel="shortcut icon" href="favicon.ico"/>
@@ -57,30 +58,44 @@ jQuery(document).ready(function() {
     Layout.init(); // init current layout
 });
 
+
 </script>
 <div class="page-header navbar navbar-fixed-top">
-	<div class="page-header-inner">
-		<div class="page-logo">
-			<a href="{% url 'report:dashboard' %}">
-			<img src="{% static 'img/logo_vnpt_big.png' %}" alt="logo" class="logo-default">
-			</a>
+    <div class="page-header-inner">
+        <div class="page-logo">
+            <!--<a href="{% url 'report:dashboard' 2017%}">-->
+            <img src="{% static 'img/logo_vnpt_big.png' %}" alt="logo" class="logo-default">
+            <!--</a>-->
 
-		</div>
-		<div class="hor-menu hor-menu-light hidden-sm hidden-xs">
-			<ul class="nav navbar-nav">
-				<li><a href="{% url 'report:dashboard' %}" >Dashboard </a></li>
-                <li><a href="{% url 'report:detail' 'ONT' %}" >ONT</a></li>
-                <li><a href="{% url 'report:detail' 'SMB & STB' %}">SMB & STB</a></li>
-                <li><a href="{% url 'report:detail' 'Smartphone' %}" >Smartphone</a></li>
-                <li><a href="{% url 'report:detail' 'DVB' %}" >DVB</a></li>
-                <li><a href="{% url 'report:detail' 'Sp khac' %}" >Sp khác</a></li>
-			</ul>
-		</div>
-	</div>
+        </div>
+        <div class="hor-menu hor-menu-light hidden-sm hidden-xs">
+            <ul class="nav navbar-nav" id="item_menu">
+                <li data-toggle="modal" data-target="#loading" onclick="loading()"><a
+                        href="{% url 'report:dashboard' year %}">Dashboard </a></li>
+                {% for p in production %}
+                <li><a href="{% url 'report:detail' p.name %}">{{p.name}}</a></li>
+                <!--<li><a href="{% url 'report:detail' 'SMB & STB' %}">SMB & STB</a></li>-->
+                <!--<li><a href="{% url 'report:detail' 'Smartphone' %}" >Smartphone</a></li>-->
+                <!--<li><a href="{% url 'report:detail' 'DVB' %}" >DVB</a></li>-->
+                <!--<li><a href="{% url 'report:detail' 'Sp khac' %}" >Sp khác</a></li>-->
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 <div class="container">
-  {% block page_content %}
-  {% endblock%}
+    {% block page_content %}
+    {% endblock%}
+    <div class="modal fade" id="loading" role="dialog">
+        <div class="modal-dialog" align="center" style="padding-top:20%">
+            <div class="progress">
+                <div id = "processing" class="progress-bar progress-bar-striped active" role="progressbar"
+                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:10%">
+                    10%
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% block page_scripts %}
 
