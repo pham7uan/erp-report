@@ -5,8 +5,8 @@
 {% block page_content %}
 <div  style="padding-top:50px">
   <div class="row">
-	  <div class="col-sm-5">
-		  <div id='circleChart'></div>
+	  <div class="col-sm-5" >
+		  <div id='circleChart' style="padding-left:10px;"></div>
 	  </div>
 	  <div class="col-sm-7">
 		  <div id ='barChart'></div>
@@ -87,13 +87,13 @@ backgroundColor:'#FFFFFF',
  	type: "ring",
  	title: {
  	  text: "Kế hoạch sản xuất",
- 	  "font-color": "#7E7E7E",
  	  fontSize: 22,
  	  // border: "1px solid black",
  	  padding: "15",
- 	  fontColor : "#1E5D9E",
+ 	  fontColor : "#7E7E7E",
  	},
  	plot: {
+ 	  size:'50%',
  	  slice:'60%',
  	  borderWidth:0,
  	  backgroundColor:'#FBFCFE',
@@ -219,7 +219,7 @@ var barConfig = {
                 "text": "%v"
             },
             "value-box": {
-      			"text": "%v"
+      			"text": "%v",
     		},
             "plotarea": {
                 "margin": "80 60 100 60",

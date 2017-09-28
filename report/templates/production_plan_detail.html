@@ -9,17 +9,15 @@ th { white-space: nowrap;
 
 </style>
 <div style="padding-top:50px">
+<h2 align="center">Kế hoạch sản xuất kinh doanh {{product}}</h2>
+<div  class="col-sm-11" align="center">
 
-
-<h1 align="center">Kế hoạch sản xuất kinh doanh {{product}}</h1>
-<div class="row" align="center">
-
-        <div id='areaChart' style="width:1100px;height:400px; "></div>
+        <div id='areaChart' style="height:400px; "></div>
         </br>
-        <div id='businessChart'style="width:1100px;height:400px;"></div>
+        <div id='businessChart'style="height:400px;"></div>
         </br>
-        <div style="width:1100px;overflow:auto; background-color: white;">
-            <h4 align="left" style="padding-left:5px;"><b> Báo cáo sản xuất kinh doanh theo tháng</b></h4>
+        <div style="overflow:auto; background-color: white;">
+            <h4 align="left" style="padding-left:5px;"><b style="color:#7E7E7E"> Báo cáo sản xuất kinh doanh theo tháng</b></h4>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr bgcolor="#D3D3D3">
@@ -179,7 +177,7 @@ th { white-space: nowrap;
  	type: "area",
  	title :{
  	  text : areaname,
- 	  fontColor : "#5f5f5f",
+ 	  fontColor : "#7E7E7E",
  	  backgroundColor : "transparent",
  	  textAlign : "left",
  	  padding: "15px 15px",
@@ -234,6 +232,7 @@ th { white-space: nowrap;
  	  }
  	},
  	scaleY : {
+
  	  lineColor : "#5f5f5f",
  	  lineWidth : "1px",
  	  tick : {
@@ -265,6 +264,7 @@ th { white-space: nowrap;
  	  }
  	},
  	plot : {
+
  	  "contour-on-top":false,
  	  alphaArea : 1,
  	  lineWidth : "2px",
@@ -312,6 +312,7 @@ gui: {
   "type":"mixed",
   "title":{
     "text":barname,
+    fontColor : "#7E7E7E",
     textAlign : "left",
     fontSize : "18px"
   },
@@ -343,6 +344,7 @@ gui: {
     ]
  	},
   "plot":{
+
   	"marker":{
       "size":1
 
@@ -357,6 +359,7 @@ gui: {
  	  			'Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12']
   },
   "scale-y":{
+
     "min-value":"0",
 },
   "series":bar_series
