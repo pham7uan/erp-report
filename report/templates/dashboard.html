@@ -3,15 +3,46 @@
 
 
 {% block page_content %}
-<div  style="padding-top:50px">
-  <div class="row">
-	  <div class="col-sm-5" >
-		  <div id='circleChart' style="padding-left:10px;"></div>
-	  </div>
-	  <div class="col-sm-7">
-		  <div id ='barChart'></div>
-	  </div>
-  </div>
+<div style="padding-top:50px">
+    <div class="row" >
+        <div class="col-sm-5">
+            <div class="portlet light bordered" >
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-bar-chart font-green-haze"></i>
+                        <span class="caption-subject bold uppercase font-green-haze"> Kế hoạch sản xuất</span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                        <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                        <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id='circleChart' ></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-bar-chart font-green-haze"></i>
+                        <span class="caption-subject bold uppercase font-green-haze">Kế hoạch sản xuất và thực tế</span>
+                    </div>
+                    <div class="tools">
+                        <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                        <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                        <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div id='barChart'></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 {% endblock%}
 
@@ -19,7 +50,7 @@
 
 <script>
 year = '{{year}}'
-var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
+var colors = ["#E7505A","#3598DC","#36D7B7","#F7CA18","#BF55EC","#E87E04","#BFCAD1","#9C27B0","#795548"]
 var production = {{ production | js }};
 var production_data = []
 for (i=0; i < production.length; i++){
@@ -41,57 +72,58 @@ for (var pkey in production_plan){
 }
 
 var type = {
-	"ke_hoach":"Kế hoạch",
-	"hang_ve":"Hàng về",
-	"san_xuat":"Sản xuất",
-	"kinh_doanh":"Kinh doanh"};
+	"san_xuat":"Sản xuất thực tế",
+	"mua_sam":"Mua sắm thực tế",
+	"kinh_doanh":"Kinh doanh thực tế"};
 
 var count =0;
+
+bar_values =[]
+for (var pkey in production_plan){
+    	detail = production_plan[pkey]
+    	bar_values.push(detail['san_xuat']['ke_hoach'])
+}
+production_plan_data.push({'values':bar_values,'text':'Kế hoạch sản xuất','background-color':colors[count]})
+count ++
 for (var key in type) {
-	values = []
+    values=[]
     for (var pkey in production_plan){
     	detail = production_plan[pkey]
-    	values.push(detail[key]['sum'])
+    	values.push(detail[key]['thuc_te'])
     }
+    console.log(values)
     production_plan_data.push({'values':values,'text':type[key],'background-color':colors[count]})
     count ++
 }
 
 var action = {
-      contextMenu:{
-        button:{
-          visible: true,
-          lineColor: "#2D66A4",
-          backgroundColor: "#2D66A4"
-        },
-        gear: {
-          alpha: 1,
-          backgroundColor: "#2D66A4"
-        },
-        position: "right",
-        backgroundColor:"#306EAA", /*sets background for entire contextMenu*/
-        docked: true,
-        item:{
-          backgroundColor:"#306EAA",
-          borderColor:"#306EAA",
-          borderWidth: 0,
-          fontFamily: "Lato",
-          color:"#fff"
+    contextMenu: {
+      customItems: [
+        {
+          text: 'Show Alert',
+          function: 'zingAlert()',
+          id: 'showAlert'
         }
-
-      },
-    }
+      ]
+    },
+    behaviors: [
+      {
+        id: 'showAlert',
+        enabled: 'all'
+      }
+    ]
+  }
 
 var circleConfig = {
 backgroundColor:'#FFFFFF',
  	type: "ring",
- 	title: {
- 	  text: "Kế hoạch sản xuất",
- 	  fontSize: 22,
- 	  // border: "1px solid black",
- 	  padding: "15",
- 	  fontColor : "#7E7E7E",
- 	},
+ 	<!--title: {-->
+ 	  <!--text: "Kế hoạch sản xuất",-->
+ 	  <!--fontSize: 22,-->
+ 	  <!--// border: "1px solid black",-->
+ 	  <!--padding: "15",-->
+ 	  <!--fontColor : "#7E7E7E",-->
+ 	<!--},-->
  	plot: {
  	  size:'50%',
  	  slice:'60%',
@@ -118,7 +150,7 @@ backgroundColor:'#FFFFFF',
  	    fontSize:16,
  	    anchor:'c',
  	    x:'50%',
- 	    y:'50%',
+ 	    y:'10%',
  	    sticky:true,
  	    backgroundColor:'none',
  	    borderWidth:0,
@@ -127,7 +159,7 @@ backgroundColor:'#FFFFFF',
       mediaRules:[
         {
             maxWidth:500,
-       	    y:'54%',
+       	    y:'45%',
         }
       ]
   },
@@ -135,12 +167,15 @@ backgroundColor:'#FFFFFF',
  	  backgroundColor: 'transparent',
  	  borderWidth: 0,
  	  borderRadius: "0 0 0 10",
- 	  margin: "70 0 10 0"
+      "margin-bottom": "50px"
  	},
  	"legend": {
                 "layout": "2x3",
-                "y": "13%",
+                "y": "0%",
                 "x": "13%",
+                 "item":{
+                    "font-color":"grey",
+                 },
                 "overflow": "page",
                 "alpha": 0.05,
                 "shadow": false,
@@ -154,7 +189,7 @@ backgroundColor:'#FFFFFF',
                 "toggle-action": "remove",
                 "pageOn": {
                     "backgroundColor": "#000",
-                    "size": "8px",
+                    "size": "10px",
                     "alpha": 0.65
                 },
                 "pageOff": {
@@ -185,36 +220,20 @@ zingchart.render({
 
 zingchart.THEME="classic";
 var barConfig = {
-	gui: {
-    contextMenu: {
-      customItems: [
-        {
-          text: 'Show Alert',
-          function: 'zingAlert()',
-          id: 'showAlert'
-        }
-      ]
-    },
-    behaviors: [
-      {
-        id: 'showAlert',
-        enabled: 'all'
-      }
-    ]
-  },
+	gui: action,
     "graphset": [
         {
             "type": "bar",
             "background-color": "#FFFFFF",
-            "title": {
-                "text": "Kế hoạch và thực tế",
-                "font-color": "#7E7E7E",
-                "backgroundColor": "none",
-                "font-size": "22px",
-                "alpha": 1,
-                "y": "15px",
-                "x": "15px"
-            },
+            <!--"title": {-->
+                <!--"text": "Kế hoạch và thực tế",-->
+                <!--"font-color": "#7E7E7E",-->
+                <!--"backgroundColor": "none",-->
+                <!--"font-size": "22px",-->
+                <!--"alpha": 1,-->
+                <!--"y": "15px",-->
+                <!--"x": "15px"-->
+            <!--},-->
             "tooltip": {
                 "text": "%v"
             },
@@ -223,12 +242,12 @@ var barConfig = {
     		},
             "plotarea": {
                 "margin": "80 60 100 60",
-                "y": "125px"
+                "y": "50px"
             },
             "legend": {
                 "layout": "x4",
-                "y": "13%",
-                "x": "24.5%",
+                "y": "0%",
+                "x": "10%",
                 "overflow": "page",
                 "alpha": 0.05,
                 "shadow": false,
@@ -237,12 +256,15 @@ var barConfig = {
                     "border-color": "none",
                     "size": "8px"
                 },
+                "item":{
+                    "font-color":"grey",
+                 },
                 "border-width": 0,
                 "maxItems": 4,
                 "toggle-action": "remove",
                 "pageOn": {
                     "backgroundColor": "#000",
-                    "size": "8px",
+                    "size": "10px",
                     "alpha": 0.65
                 },
                 "pageOff": {
@@ -307,14 +329,18 @@ zingchart.node_click = function(data){
 			id = data["id"]
             nodeid = data["nodeindex"]
             plotid = data["plotindex"]
+            ip = document.location.hostname
             if (id == 'circleChart'){
             	productname = production[plotid]['name']
-            	window.location = "http://localhost:8000/erp/detail/" + productname;
+            	window.location = "http://" + ip + ":8000/erp/detail/" + productname;
             } else if (id == 'barChart'){
             	var keys = Object.keys( production_plan );
             	productname = keys[nodeid]
-            	window.location = "http://localhost:8000/erp/detail/" + productname;
+            	console.log((document.location.hostname))
+
+            	window.location = "http://" + ip + ":8000/erp/detail/" + productname;
             }
        }
+
 </script>
 {% endblock%}

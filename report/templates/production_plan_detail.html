@@ -7,84 +7,187 @@ th { white-space: nowrap;
      align: center;}
 
 
+
 </style>
 <div style="padding-top:50px">
-<h2 align="center">Kế hoạch sản xuất kinh doanh {{product}}</h2>
-<div  class="col-sm-11" align="center">
-
-        <div id='areaChart' style="height:400px; "></div>
-        </br>
-        <div id='businessChart'style="height:400px;"></div>
-        </br>
-        <div style="overflow:auto; background-color: white;">
-            <h4 align="left" style="padding-left:5px;"><b style="color:#7E7E7E"> Báo cáo sản xuất kinh doanh theo tháng</b></h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr bgcolor="#D3D3D3">
-                    <th>TT</th>
-                    <th>Thông tin</th>
-                    <th>Tổng</th>
-                    <th>Tồn đầu kỳ</th>
-                    <th>T1</th>
-                    <th>T2</th>
-                    <th>T3</th>
-                    <th>T4</th>
-                    <th>T5</th>
-                    <th>T6</th>
-                    <th>T7</th>
-                    <th>T8</th>
-                    <th>T9</th>
-                    <th>T10</th>
-                    <th>T11</th>
-                    <th>T12</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Kế hoạch</td>
-                    <td>{{production_plan.ke_hoach.sum}}</td>
-                    <td style="width:80px">{{production_plan.ke_hoach.ton_kho}}</td>
-                    {% for v in production_plan.ke_hoach.months%}
-                    <td>{{v}}</td>
-                    {% endfor%}
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Hàng về</td>
-                    <td>{{production_plan.hang_ve.sum}}</td>
-                    <td>{{production_plan.hang_ve.ton_kho}}</td>
-                    {% for v in production_plan.hang_ve.months%}
-                    <td><a href="#" data-toggle="modal" data-target="#myModal"
-                           onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
-                    {% endfor%}
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Sản xuất</td>
-                    <td>{{production_plan.san_xuat.sum}}</td>
-                    <td>{{production_plan.san_xuat.ton_kho}}</td>
-                    {% for v in production_plan.san_xuat.months%}
-                    <td><a href="#" data-toggle="modal" data-target="#myModal"
-                           onclick="handleModal('san_xuat',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
-                    {% endfor%}
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Kinh doanh</td>
-                    <td>{{production_plan.kinh_doanh.sum}}</td>
-                    <td>{{production_plan.kinh_doanh.ton_kho}}</td>
-                    {% for v in production_plan.kinh_doanh.months%}
-                    <td><a href="#" data-toggle="modal" data-target="#myModal"
-                           onclick="handleModal('kinh_doanh',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
-                    {% endfor%}
-                </tr>
-                </tbody>
-            </table>
+    <h2 align="center" style="color:grey;">Kế hoạch sản xuất kinh doanh {{product}}</h2>
+    <div class="col-sm-12" align="center">
+        <!--<div id='businessChart'style="height:400px;"></div>-->
+        <!--</br>-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Kế hoạch sản xuất và thực tế</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id='produceChart' style="height:400px;"></div>
+            </div>
         </div>
+        </br>
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Kế hoạch mua sắm và thực tế</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id='receiveChart' style="height:400px;"></div>
+            </div>
+        </div>
+        </br>
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Kế hoạch kinh doanh và thực tế</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id='saleChart' style="height:400px;"></div>
+            </div>
+        </div>
+        </br>
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze"> Phân bổ kế hoạch theo tháng - biểu đồ miền</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div id='areaChart' style="height:400px;"></div>
+            </div>
+        </div>
+        </br>
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-bar-chart font-green-haze"></i>
+                    <span class="caption-subject bold uppercase font-green-haze">Báo cáo sản xuất kinh doanh theo tháng</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="fullscreen" data-original-title="" title=""></a>
+                    <a href="javascript:;" class="remove" data-original-title="" title=""></a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div style="overflow:auto; background-color: white;">
+                    <div class = "table-scrollable">
+                        <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Thông tin</th>
+                            <th>Tổng</th>
+                            <th>Tồn đầu kỳ</th>
+                            <th>T1</th>
+                            <th>T2</th>
+                            <th>T3</th>
+                            <th>T4</th>
+                            <th>T5</th>
+                            <th>T6</th>
+                            <th>T7</th>
+                            <th>T8</th>
+                            <th>T9</th>
+                            <th>T10</th>
+                            <th>T11</th>
+                            <th>T12</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Kế hoạch sản xuất</td>
+                            <td>{{production_plan.san_xuat.ke_hoach}}</td>
+                            <td></td>
+                            {% for v in production_plan.san_xuat.ke_hoach_thang%}
+                            <td>{{v}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Sản xuất thực tế</td>
+                            <td>{{production_plan.san_xuat.thuc_te}}</td>
+                            <td>{{production_plan.san_xuat.ton_kho}}</td>
+                            {% for v in production_plan.san_xuat.thuc_te_thang%}
+                            <td><a href="#" data-toggle="modal" data-target="#myModal"
+                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Kế hoạch mua sắm</td>
+                            <td>{{production_plan.mua_sam.ke_hoach}}</td>
+                            <td></td>
+                            {% for v in production_plan.mua_sam.ke_hoach_thang%}
+                            <td>{{v}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Mua sắm thực tế</td>
+                            <td>{{production_plan.mua_sam.thuc_te}}</td>
+                            <td>{{production_plan.mua_sam.ton_kho}}</td>
+                            {% for v in production_plan.mua_sam.thuc_te_thang%}
+                            <td><a href="#" data-toggle="modal" data-target="#myModal"
+                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Kế hoạch kinh doanh</td>
+                            <td>{{production_plan.kinh_doanh.ke_hoach}}</td>
+                            <td></td>
+                            {% for v in production_plan.kinh_doanh.ke_hoach_thang%}
+                            <td>{{v}}</td>
+                            {% endfor%}
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Kinh doanh thực tế</td>
+                            <td>{{production_plan.kinh_doanh.thuc_te}}</td>
+                            <td>{{production_plan.kinh_doanh.ton_kho}}</td>
+                            {% for v in production_plan.kinh_doanh.thuc_te_thang%}
+                            <td><a href="#" data-toggle="modal" data-target="#myModal"
+                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                            {% endfor%}
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </br>
 
 
-</div>
+    </div>
 </div>
 
 <!-- Modal -->
@@ -108,26 +211,149 @@ th { white-space: nowrap;
 {% block page_scripts %}
 
 <script>
+<!--initial-->
+    window.customFncs = {};
     year = '{{year}}'
 	var areaname = "Phân bổ kế hoạch theo tháng - biểu đồ miền"
 	var barname = "Phân bổ kế hoạch theo tháng - biểu đồ cột"
-	var colors = ["#F44336","#673AB7","#03A9F4","#4CAF50","#FFEB3B","#FF5722","#607D8B","#9C27B0","#795548"]
+	var colors = ["#E7505A","#3598DC","#36D7B7","#F7CA18","#BF55EC","#E87E04","#BFCAD1","#9C27B0","#795548"]
 
 	var type = {
-	"ke_hoach":"Kế hoạch",
-	"hang_ve":"Hàng về",
-	"san_xuat":"Sản xuất",
-	"kinh_doanh":"Kinh doanh"};
+	"mua_sam":"Mua sắm thực tế",
+	"san_xuat":"Sản xuất thực tế",
+	"kinh_doanh":"Kinh doanh thực tế"};
+
+	var type_plan = {
+	"ke_hoach_kh":"Kế hoạch",
+	"mua_sam":"Mua sắm kế hoạch",
+	"san_xuat":"Sản xuất kế hoạch",
+	"kinh_doanh":"Kinh doanh kế hoạch"};
 
 	var area_series=[]
 	var bar_series=[]
+	var receive_series=[]
+    var produce_series=[]
+    var sale_series=[]
 	var line = {{line | js}}
 	var production_plan = {{production_plan | js}}
-
+    var reality_dict = {{reality_dict | js}}
+    var plan_dict = {{plan_dict |js}}
+    var pass_plan_dict = {{pass_plan_dict | js }}
+    var virtual_plan_dict = {{virtual_plan | js }}
 	var count =0;
+
+
+<!--detail chart-->
+    var bar = {
+                'values':'',
+    		    'text':'',
+    		    'type':'bar',
+    		    'backgroundColor':'',
+    		    "tooltip":{
+                    "text":"%t: %v",
+                    "thousands-separator":","
+                },
+                "value-box":{
+                    "text":"%v",
+                    "angle": -90,
+                    color:"black",
+
+                    "offset-y": -15,
+                    "rules":[
+                        {
+                            "rule":"%v <= 0",
+                            "visible":false,
+
+                        }
+                    ]
+                }
+    		  }
+    <!--hang ve-->
+    receive_bar1 = $.extend({}, bar)
+    receive_bar2 = $.extend({}, bar)
+    receive_series.push(receive_bar1)
+    receive_series[0]['text']="Kế hoạch mua sắm"
+    receive_series[0]['values']=production_plan['mua_sam']['ke_hoach_thang']
+    receive_series[0]['backgroundColor']="#E7505A"
+    receive_series.push(receive_bar2)
+    receive_series[1]['text']="Mua sắm thực tế"
+    receive_series[1]['values']=production_plan['mua_sam']['thuc_te_thang']
+    receive_series[1]['backgroundColor']="#3598DC",
+    receive_series.push({
+            "line-color":"#F7CA18",
+    	    "type":"line",
+            "values":line['mua_sam']['ke_hoach_thang'],
+            "text":"Linear (" + type_plan['mua_sam'] +")",})
+    receive_series.push({
+            "line-color":"#BF55EC",
+    	    "type":"line",
+            "values":line['mua_sam']['thuc_te_thang'],
+            "text":"Linear (" + type['mua_sam'] +")",})
+
+    <!--san xuat-->
+    produce_bar1 = $.extend({}, bar)
+    produce_bar2 = $.extend({}, bar)
+    produce_series.push(produce_bar1)
+    produce_series[0]['text']="Kế hoạch sản xuất"
+    produce_series[0]['values']=production_plan['san_xuat']['ke_hoach_thang']
+    produce_series[0]['backgroundColor']="#E7505A"
+    produce_series.push(produce_bar2)
+    produce_series[1]['text']="Sản xuất thực tế"
+    produce_series[1]['values']=production_plan['san_xuat']['thuc_te_thang']
+    produce_series[1]['backgroundColor']="#3598DC",
+    produce_series.push({
+            "line-color":"#F7CA18",
+    	    "type":"line",
+            "values":line['san_xuat']['ke_hoach_thang'],
+            "text":"Linear (" + type_plan['san_xuat'] +")",})
+    produce_series.push({
+            "line-color":"#BF55EC",
+    	    "type":"line",
+            "values":line['san_xuat']['thuc_te_thang'],
+            "text":"Linear (" + type['mua_sam'] +")",})
+
+
+    <!--kinh doanh-->
+    sale_bar1 = $.extend({}, bar)
+    sale_bar2 = $.extend({}, bar)
+    sale_series.push(sale_bar1)
+    sale_series[0]['text']="Kế hoạch kinh doanh"
+    sale_series[0]['values']=production_plan['kinh_doanh']['ke_hoach_thang']
+    sale_series[0]['backgroundColor']="#E7505A"
+    sale_series.push(sale_bar2)
+    sale_series[1]['text']="Kinh doanh thực tế"
+    sale_series[1]['values']=production_plan['kinh_doanh']['thuc_te_thang']
+    sale_series[1]['backgroundColor']="#3598DC",
+    sale_series.push({
+            "line-color":"#F7CA18",
+    	    "type":"line",
+            "values":line['kinh_doanh']['ke_hoach_thang'],
+            "text":"Linear (" + type_plan['san_xuat'] +")",})
+    sale_series.push({
+            "line-color":"#BF55EC",
+    	    "type":"line",
+            "values":line['kinh_doanh']['thuc_te_thang'],
+            "text":"Linear (" + type['mua_sam'] +")",})
+
+
+<!--sumary chart   -->
+    area_series.push(
+    		{'values':production_plan['san_xuat']['ke_hoach_thang'],
+    		'text':'Kế hoạch sản xuất',
+    		'backgroundColor1':colors[count],
+    		'backgroundColor2':colors[count],
+    		"line-color":colors[count],
+    })
+    count ++
     for (var key in  type){
     	name = 	type[key]
-    	values = production_plan[key]['months']
+    	name_plan = type_plan[key+'_kh']
+    	values = production_plan[key]['thuc_te_thang']
+    	<!--reality = reality_dict[key]-->
+    	<!--plan = plan_dict[key+'_kh']-->
+    	<!--pass_plan = pass_plan_dict[key]-->
+    	<!--virtual_plan = virtual_plan_dict[key+'_kh']-->
+    	<!--console.log(reality)-->
     	area_series.push(
     		{'values':values,
     		'text':name,
@@ -135,22 +361,106 @@ th { white-space: nowrap;
     		'backgroundColor2':colors[count],
     		"line-color":colors[count],
     		})
-    	bar_series.push(
-    		{'values':values,
-    		'text':name,
-    		'type':'bar',
-    		'backgroundColor':colors[count]
-    		})
-    	bar_series.push(
-    	{
-    	    "type":"line",
-            "values":line[key],
-            "text":"Linear (" + type[key] +")",
-    	}
-    	)
+
+    	<!--bar_series.push(-->
+    	<!--{-->
+    	    <!--"type":"line",-->
+            <!--"values":line[key],-->
+            <!--"text":"Linear (" + type[key] +")",-->
+    	<!--}-->
+    	<!--)-->
+    	<!--bar_series.push(-->
+    		<!--{'values':reality,-->
+    		<!--'text':name,-->
+    		<!--'type':'bar',-->
+    		<!--'backgroundColor':colors[count],-->
+    		<!--'stack':count,-->
+    		<!--"stacked": true,-->
+                <!--"border-color": "grey",-->
+                <!--"border-width": 3,-->
+    		<!--"tooltip":{-->
+                <!--"text":"%t: %v",-->
+                <!--"thousands-separator":","-->
+            <!--},-->
+            <!--"value-box":{-->
+                <!--"text":"%npv%",-->
+                <!--"angle": -90,-->
+                <!--color:"white",-->
+                <!--"placement": "top-in",-->
+                <!--"offset-y": 5,-->
+                <!--"decimals":0,-->
+                <!--"rules":[-->
+                    <!--{-->
+                        <!--"rule":"%v <= 0",-->
+                        <!--"visible":false,-->
+
+                    <!--}-->
+                <!--]-->
+            <!--}-->
+    		<!--})-->
+    	<!--bar_series.push(-->
+    		<!--{'values':plan,-->
+    		<!--'text':name_plan,-->
+    		<!--'type':'bar',-->
+    		<!--'backgroundColor':"grey",-->
+    		<!--'stack':count,-->
+    		<!--"stacked": true,-->
+            <!--"border-color": "grey",-->
+            <!--"border-width": 2,-->
+    		<!--"tooltip":{-->
+                <!--"text":"%t: %total",-->
+                <!--"thousands-separator":","-->
+            <!--},-->
+            <!--"legend-item":{-->
+            <!--"visible":false,-->
+                <!--},-->
+    		<!--})-->
+
+    	<!--bar_series.push(-->
+    		<!--{'values':virtual_plan,-->
+    		<!--'text':name_plan,-->
+    		<!--'type':'bar',-->
+    		<!--'backgroundColor':colors[count],-->
+    		<!--'stack':count,-->
+    		<!--"stacked": true,-->
+            <!--"border-color": "grey",-->
+            <!--"border-width": 2,-->
+    		<!--"tooltip":{-->
+                <!--"text":"%t: %v",-->
+                <!--"thousands-separator":","-->
+            <!--},-->
+            <!--"legend-item":{-->
+            <!--"visible":false,-->
+                <!--},-->
+    		<!--})-->
+    	<!--bar_series.push(-->
+    		<!--{'values':pass_plan,-->
+    		<!--'text':name,-->
+    		<!--'type':'bar',-->
+    		<!--'backgroundColor':colors[count],-->
+    		<!--'stack':count,-->
+    		<!--"stacked": true,-->
+    		<!--"tooltip":{-->
+                <!--"text":"%t: %total",-->
+                <!--"thousands-separator":","-->
+            <!--},-->
+            <!--"legend-item":{-->
+            <!--"visible":false,-->
+            <!--},-->
+            <!--"value-box":{-->
+                <!--"jsRule":"window.customFncs.calculator_pass_plan()",-->
+                <!--"rules":[-->
+                    <!--{-->
+                        <!--"rule":"%v <= 0",-->
+                        <!--"visible":false,-->
+                    <!--}-->
+                <!--]-->
+            <!--}-->
+    	<!--})-->
     	count ++
     }
-	<!--console.log(assign_series)-->
+
+
     var areaConfig = {
     gui: {
     contextMenu: {
@@ -175,18 +485,17 @@ th { white-space: nowrap;
     fontFamily : "Helvetica"
   },
  	type: "area",
- 	title :{
- 	  text : areaname,
- 	  fontColor : "#7E7E7E",
- 	  backgroundColor : "transparent",
- 	  textAlign : "left",
- 	  padding: "15px 15px",
- 	  fontSize : "18px"
- 	},
+ 	<!--title :{-->
+ 	  <!--text : areaname,-->
+ 	  <!--fontColor : "#7E7E7E",-->
+ 	  <!--backgroundColor : "transparent",-->
+ 	  <!--textAlign : "left",-->
+ 	  <!--padding: "15px 15px",-->
+ 	  <!--fontSize : "18px"-->
+ 	<!--},-->
  	legend : {
     "layout": "x4",
     toggleAction:'remove',
-    backgroundColor:'#FBFCFE',
     borderWidth:0,
     adjustLayout:true,
     align:'center',
@@ -310,18 +619,18 @@ gui: {
   },
 	"background-color": "#FFFFFF",
   "type":"mixed",
-  "title":{
-    "text":barname,
-    fontColor : "#7E7E7E",
-    textAlign : "left",
-    fontSize : "18px"
-  },
+  <!--"title":{-->
+    <!--"text":barname,-->
+    <!--fontColor : "#7E7E7E",-->
+    <!--textAlign : "left",-->
+    <!--fontSize : "18px"-->
+  <!--},-->
   legend : {
-    "layout": "2x4",
+    "layout": "x4",
     toggleAction:'remove',
-    backgroundColor:'#FBFCFE',
+
     borderWidth:0,
-    adjustLayout:true,
+
     align:'center',
     verticalAlign:'bottom',
     marker: {
@@ -343,16 +652,20 @@ gui: {
         }
     ]
  	},
-  "plot":{
 
+  "plot":{
+    "rules":[
+        {
+            "rule":"%v <= 0",
+            "visible":false,
+
+        },
+    ],
   	"marker":{
       "size":1
 
     },
-    "tooltip":{
-      "text":"%t: %v",
-      "thousands-separator":","
-    }
+
   },
   "scale-x":{
     "labels":['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7',
@@ -365,12 +678,67 @@ gui: {
   "series":bar_series
 };
 
+var receiveConfig = $.extend({},businessConfig)
+var produceConfig = $.extend({},businessConfig)
+var saleConfig = $.extend({},businessConfig)
+
+window.customFncs.calculator_pass_plan = function(p){
+  index = p['scaleval']
+  if (p['plotindex']==9){
+    v = pass_plan_dict['hang_ve'][index]
+    plan = virtual_plan_dict['hang_ve_kh'][index]
+  } else if (p['plotindex']==14){
+    v = pass_plan_dict['san_xuat'][index]
+    plan = virtual_plan_dict['san_xuat_kh'][index]
+  } else if (p['plotindex']==19){
+    v = pass_plan_dict['kinh_doanh'][index]
+    plan = virtual_plan_dict['kinh_doanh_kh'][index]
+  }
+  percent = ((v + plan)/plan) *100
+  percent = Number((percent).toFixed(0))
+  return {
+      text : percent +'%',
+      color:"black",
+      "angle": -90,
+      "offset-y": -10
+  }
+
+}
+
+<!--zingchart.render({-->
+	<!--id : 'businessChart',-->
+	<!--data : businessConfig,-->
+	<!--height: "100%",-->
+	<!--width: "100%"-->
+<!--});-->
+
+receiveConfig["series"] = receive_series
 zingchart.render({
-	id : 'businessChart',
-	data : businessConfig,
+	id : 'receiveChart',
+	data : receiveConfig,
 	height: "100%",
 	width: "100%"
 });
+
+
+produceConfig["series"] = produce_series
+zingchart.render({
+	id : 'produceChart',
+	data : produceConfig,
+	height: "100%",
+	width: "100%"
+});
+
+saleConfig["series"] = sale_series
+zingchart.render({
+	id : 'saleChart',
+	data : saleConfig,
+	height: "100%",
+	width: "100%"
+});
+
+
+
 
 </script>
 {% endblock%}

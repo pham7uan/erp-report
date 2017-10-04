@@ -61,17 +61,21 @@ jQuery(document).ready(function() {
 
 
 </script>
-<div class="page-header navbar navbar-fixed-top" style="background-color:#F1F3FA; padding-left:10px;">
+<div class="page-header navbar navbar-fixed-top" >
+
     <div class="page-header-inner">
-        <div class="hor-menu hor-menu-light hidden-sm hidden-xs">
+            <div class="page-logo">
+                <a href="{% url 'report:dashboard' year %}"><img src="{% static 'img/logo_vnpt_big.png' %}" alt="logo" class="logo-default"></a>
+
+		    </div>
             <ul class="nav navbar-nav" id="item_menu">
-                <li data-toggle="modal" data-target="#loading" onclick="loading()"><a
-                        href="{% url 'report:dashboard' year %}"><b style="color:grey;">Dashboard </b></a></li>
+                <li data-toggle="modal" data-target="#loading" onclick="loading()">
+                    <a href="{% url 'report:dashboard' year %}"><b style="color:white;">Dashboard </b></a></li>
                 {% for p in production %}
-                <li><a href="{% url 'report:detail' p.name %}"><b style="color:grey;">{{p.name}}</b></a></li>
+                <li><a href="{% url 'report:detail' p.name %}"><b style="color:white;">{{p.name}}</b></a></li>
                 {% endfor %}
             </ul>
-        </div>
+
     </div>
 </div>
 <div>
@@ -84,7 +88,7 @@ jQuery(document).ready(function() {
                 <!--{% endfor %}-->
         <!--</ul>-->
     <!--</div>-->
-    <div class="col-md-11">
+    <div class="col-md-12">
         {% block page_content %}
         {% endblock%}
     </div>
