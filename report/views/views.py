@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+from report import mrp2, data_30
 from report.rest import *
 import json
 from report.mrp import *
@@ -8,6 +10,7 @@ from report.models import *
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.decorators.csrf import csrf_exempt
 from report.tests import *
+
 
 @xframe_options_exempt
 def synchronous_report_current(request):
@@ -106,11 +109,11 @@ def save_report(request):
         print request.POST['result']
     return render(request, "synchronous_report.html",{'result': report.result, 'input': report.result, 'name': report.result})
 
-@xframe_options_exempt
-def report_preview(request):
-    receive = hang_ve_test
-    production_plan = production_plan_test
-    return render(request,'report_preview.html',{'production_plan':production_plan,'receive':receive})
+# @xframe_options_exempt
+# def report_preview(request):
+#     receive = hang_ve_test
+#     production_plan = production_plan_test
+#     return render(request,'report_preview.html',{'production_plan':production_plan,'receive':receive})
 
 @csrf_exempt
 def mrp_calculator(request):
@@ -164,6 +167,19 @@ def mrp_calculator(request):
         return HttpResponse(result_json)
     return HttpResponse('Hello, this is mrp calculator api. Method POST, body: {"data":your_dict}')
 
+@csrf_exempt
+def mrp_calculator2(request):
+    if request.method == 'POST':
+        # print request.body
+        # json_data = json.loads(request.body.decode(encoding='UTF-8'))
+        # data = json_data['data']
+        # data = data2.data
+        mrp2.bom = data_30.data['bom']
+        mrp2.materials = data_30.data['materials']
+        result = mrp2.main()
+        result_json = json.dumps(result)
+        return HttpResponse(result_json)
+    return HttpResponse('Hello, this is mrp calculator api. Method POST, body: {"data":your_dict}')
 
 
 def check_minimum(bom, materials,required):

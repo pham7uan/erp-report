@@ -15,11 +15,11 @@ def dashboard(request,year):
     global g_plan
     global g_year
     g_year = year
-    # g_plan = get_reality_production_detail(year)
-    # g_production = get_reality_production(year)
+    g_plan = get_reality_production_detail(year)
+    g_production = get_reality_production(year)
 
-    g_production = production_test
-    g_plan = production_plan_test
+    # g_production = production_test
+    # g_plan = production_plan_test
     if bool(g_production):
         return render(request,'dashboard.html',{'production':g_production,'production_plan':g_plan,'year':year})
     return HttpResponse("Data is empty")

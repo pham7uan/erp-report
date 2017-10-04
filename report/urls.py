@@ -21,11 +21,11 @@ urlpatterns = [
     url(r'^synchronous-report-current/', views.synchronous_report_current, name='current'),
     url(r'^save-report/', views.save_report, name='save'),
     url(r'^(?P<pk>[0-9]+)/synchronous-report/$', views.synchronous_report, name='synchronous_report'),
-    url(r'^mrp-calculator/', views.mrp_calculator, name='mrp-calculator'),
+    url(r'^mrp-calculator/', views.mrp_calculator2, name='mrp-calculator'),
     url(r'^dashboard/(?P<year>[0-9]+)/$', charts.dashboard, name='dashboard'),
     # url(r'^area/(?P<product>([\w& ]+))/$', charts.area, name='area'),
     url(r'^detail/(?P<product>([\w& -]+))/$', charts.detail, name='detail'),
-    url(r'^report-preview/', views.report_preview, name='report-preview'),
+    # url(r'^report-preview/', views.report_preview, name='report-preview'),
 ]
 #
 #synchronous-report
