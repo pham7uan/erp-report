@@ -15,8 +15,8 @@ Step 5: Config IP
 Step 6: Run server
     python manage.py runserver 0.0.0.0:8000
 Step 7: Config backend address
-    login http://localhost:8000/admin/report/setting/ with superuser
-    ADD SETTING
+    login http://localhost:8000/admin/report/setting/1/change/
+    with superuser
     key: backend_address
-    value: your_server_ip
+    value: your_server_ip (ex: 10.2.8.163:8090)
 
