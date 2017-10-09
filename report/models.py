@@ -12,3 +12,7 @@ class Report(models.Model):
     created = models.DateTimeField(default=datetime.now, blank=True)
     input = models.CharField(max_length=50)
     result = models.TextField()
+
+class Setting(models.Model):
+    key = models.CharField(max_length=50)
+    value = models.CharField(max_length=50)

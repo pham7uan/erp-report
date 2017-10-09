@@ -1,7 +1,7 @@
 import requests
-import collections
-import json
-base_url = 'http://10.2.8.58:8090/api/v2/'
+from models import Setting
+s = Setting.objects.get(key='backend_address')
+base_url = 'http://'+ s.value + '/api/v2/'
 
 def get_products():
     url = base_url +'inv/part/export/getListProduct'
@@ -27,6 +27,11 @@ def get_reality_production(year):
 
 def get_reality_production_detail(year):
     url =base_url +'inv/report_v2/GetPlanProduction?year=' + str(year)
+    response = requests.get(url).json()
+    return response
+
+def token_check(token):
+    url = base_url + 'inv/report_v2/GetPlanProduction?year=' + str(token)
     response = requests.get(url).json()
     return response
 

@@ -125,6 +125,7 @@ def main():
             levels = key.split('_')
             name = key.split('_')[0]
             if len(levels) ==2 and levels[1] != 'm':
+                required = bom[levels[1]][1]
                 if levels[1] not in result['bom']:
                     result['bom'][levels[1]] = {
                         name:value
@@ -150,5 +151,6 @@ def main():
                 else:
                     result['bom'][levels[2]][name]= value
     return result
+
 if __name__ == '__main__':
     main()

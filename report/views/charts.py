@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,Http404
 from django.shortcuts import render, redirect
 from report.rest import *
 # import report.tests
@@ -9,8 +9,21 @@ from report.tests import *
 g_production=[]
 g_plan ={}
 g_year =2017
+
+
 @xframe_options_exempt
 def dashboard(request,year):
+    try:
+        # token = request.META['HTTP_TOKEN']
+        token = "hsadj12312328"
+        is_valid = True
+        if is_valid:
+            request.session['token'] = token
+        else:
+            raise Http404("You do not have permission")
+    except:
+        raise Http404("You do not have permission")
+
     global g_production
     global g_plan
     global g_year
@@ -26,6 +39,9 @@ def dashboard(request,year):
 
 @xframe_options_exempt
 def detail(request,product):
+    token = request.session.get('token', False)
+    if not token:
+        raise Http404("You do not have permission")
     global g_production
     global g_plan
     global g_year
