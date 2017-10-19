@@ -1,7 +1,7 @@
 import requests
-from models import Setting
-s = Setting.objects.get(key='backend_address')
-base_url = 'http://'+ s.value + '/api/v2/'
+from django.conf import settings
+s = settings.API_URL
+base_url = 'http://'+ s + '/api/v2/'
 
 def get_products():
     url = base_url +'inv/part/export/getListProduct'

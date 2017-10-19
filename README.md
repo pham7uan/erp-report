@@ -10,13 +10,11 @@
     python manage.py makemigrations
     python manage.py migrate
     python manage.py create superuser
-# Step 5: Config IP
-    in erp_report/settings.py, add server ip to ALLOWED_HOSTS
+# Step 5: Config IP server and Backend api address
+    in erp_report/settings.py:
+        find ALLOWED_HOSTS array variable, and add your server ip to ALLOWED_HOSTS (ex: ALLOWED_HOSTS = ['localhost','10.2.8.35'])
+        find API_URL variable, and modify backend api address (ex: API_URL = '10.2.8.28:8090')
 # Step 6: Run server
     python manage.py runserver 0.0.0.0:8000
-# Step 7: Config backend address
-    login http://localhost:8000/admin/report/setting/1/change/
-    with superuser
-    key: backend_address
-    value: your_server_ip (ex: 10.2.8.163:8090)
+
 

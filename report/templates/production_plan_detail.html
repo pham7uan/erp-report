@@ -97,7 +97,7 @@ th { white-space: nowrap;
             <div class="portlet-body">
                 <div style="overflow:auto; background-color: white;">
                     <div class = "table-scrollable">
-                        <table class="table table-bordered table-hover">
+                        <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>#</th>
@@ -135,7 +135,7 @@ th { white-space: nowrap;
                             <td>{{production_plan.san_xuat.ton_kho}}</td>
                             {% for v in production_plan.san_xuat.thuc_te_thang%}
                             <td><a href="#" data-toggle="modal" data-target="#myModal"
-                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                                   onclick="handleModal('san_xuat',{{ forloop.counter }})">{{v}}</a></td>
                             {% endfor%}
                         </tr>
                         <tr>
@@ -154,7 +154,7 @@ th { white-space: nowrap;
                             <td>{{production_plan.mua_sam.ton_kho}}</td>
                             {% for v in production_plan.mua_sam.thuc_te_thang%}
                             <td><a href="#" data-toggle="modal" data-target="#myModal"
-                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                                   onclick="handleModal('mua_sam',{{ forloop.counter }})">{{v}}</a></td>
                             {% endfor%}
                         </tr>
                         <tr>
@@ -173,7 +173,7 @@ th { white-space: nowrap;
                             <td>{{production_plan.kinh_doanh.ton_kho}}</td>
                             {% for v in production_plan.kinh_doanh.thuc_te_thang%}
                             <td><a href="#" data-toggle="modal" data-target="#myModal"
-                                   onclick="handleModal('hang_ve',{{ forloop.counter }},'{{key}}')">{{v}}</a></td>
+                                   onclick="handleModal('kinh_doanh',{{ forloop.counter }})">{{v}}</a></td>
                             {% endfor%}
                         </tr>
 
@@ -212,6 +212,8 @@ th { white-space: nowrap;
 
 <script>
 <!--initial-->
+    var product = '{{product}}'
+    var api_url = '{{api_url}}'
     window.customFncs = {};
     year = '{{year}}'
 	var areaname = "Phân bổ kế hoạch theo tháng - biểu đồ miền"
